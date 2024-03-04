@@ -1,11 +1,25 @@
-#Projeto para o Rebase Labs.
+# Projeto para o Rebase Labs.
 
-Docker
-Ruby
+Aplicação web para importar um .cvs para um banco de dados usando Docker.
 
-Como usar: 
+## Tecnologias:
+- Docker
+- Ruby
 
+## Como usar: 
+
+```
 bin/bash
+```
+## Endpoints: 
+```
+/tests
+```
+## Tests: 
+```
+bin/bash
+rspec
+```
 
 
 
