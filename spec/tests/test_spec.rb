@@ -1,7 +1,4 @@
-ENV['RACK_ENV'] = 'test'
-
-require_relative '../../server'  # <-- your sinatra app
-require 'rspec'
+require_relative '../../server'
 require 'rack/test'
 
 RSpec.describe 'CVS Import App' do

@@ -1,1 +1,11 @@
-Projeto para o Rebase Labs.
+#Projeto para o Rebase Labs.
+
+Docker
+Ruby
+
+Como usar: 
+
+bin/bash
+
+
+

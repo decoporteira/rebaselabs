@@ -1,6 +1,10 @@
 require 'sinatra'
 require 'pg'
 
+get '/' do
+  'Olá'
+end
+
 get '/tests' do
   db_config = {
   host: (ENV['DBHOST'] || 'localhost'),
