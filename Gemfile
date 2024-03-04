@@ -1,13 +1,16 @@
 source 'https://rubygems.org'
-gem "rackup", "~> 2.1"
 
-gem "puma", "~> 6.4"
+gem 'pg'
 
-gem "sinatra", "~> 4.0"
+gem 'puma', '~> 6.4'
 
-gem "rack"
+gem 'rackup', '~> 2.1'
+
+gem 'rack'
+
+gem 'sinatra', '~> 4.0'
 
 group :test do
-  gem "rspec"
-  gem "rack-test"
+  gem 'rack-test'
+  gem 'rspec'
 end

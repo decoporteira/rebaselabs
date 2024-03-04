@@ -1,0 +1,27 @@
+docker network rm my-network
+
+docker network create my-network
+
+docker run \
+  --rm \
+  --name dataBaseContainer \
+  -e POSTGRES_PASSWORD=123456 \
+  -e POSTGRES_DB=data_base \
+  -p 5432:5432 \
+  --network my-network \
+  -d \
+  postgres
+
+docker run \
+  --rm \
+  --name rebaselabs \
+  -w /app \
+  -v $(pwd):/app \
+  -p 3000:3000 \
+  -e DBHOST=dataBaseContainer \
+  --network my-network \
+  -it \
+  ruby \
+  bash -c "bundle install && ruby import.rb && ruby server.rb -p 3000 -o 0.0.0.0"
+
+

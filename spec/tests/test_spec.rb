@@ -1,19 +1,20 @@
 ENV['RACK_ENV'] = 'test'
 
-require_relative '../../app/app'  # <-- your sinatra app
+require_relative '../../server'  # <-- your sinatra app
 require 'rspec'
 require 'rack/test'
 
-RSpec.describe 'The HelloWorld App' do
+RSpec.describe 'CVS Import App' do
   include Rack::Test::Methods
 
   def app
     Sinatra::Application
   end
 
-  it "lê texto no html" do
-    get '/'
+  it 'testa o json' do
+    get '/tests'
     expect(last_response).to be_ok
-    expect(last_response.body).to eq('Hello World')
+    expect(last_response.body).to include('Emilly Batista Neto')
+    expect(last_response.content_type).to eq('application/json')
   end
 end
