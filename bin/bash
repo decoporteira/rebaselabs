@@ -19,4 +19,4 @@ docker run \
   -e DBHOST=dataBaseContainer \
   --network my-network \
   ruby \
-  bash -c "bundle install && ruby import.rb && bundle exec ruby server.rb -p 3000 -o 0.0.0.0"
+  bash -c "bundle install && ruby import.rb && ruby server.rb -p 3000 -o 0.0.0.0"
