@@ -41,8 +41,8 @@ insert_query = <<~SQL
   INSERT INTO exams_result (cpf, nome_paciente, email_paciente, data_nascimento_paciente, endereco_paciente, cidade_paciente, estado_paciente, crm_medico, crm_medico_estado, nome_medico, email_medico, token_resultado_exame, data_exame, tipo_exame, limites_tipo_exame, resultado_tipo_exame)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
 SQL
-# CSV.foreach("./data/data.csv", col_sep: ';', headers: true) do |row|
-#   conn.exec_params(insert_query, row.fields)
-# end
+CSV.foreach("./data/data.csv", col_sep: ';', headers: true) do |row|
+  conn.exec_params(insert_query, row.fields)
+end
 
 conn.close
