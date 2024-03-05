@@ -7,6 +7,7 @@ docker run \
   -e POSTGRES_DB=data_base \
   -p 5432:5432 \
   --network my-network \
+  -v $(pwd)/pg_data:/var/lib/postgresql/data \
   -d \
   postgres
 
