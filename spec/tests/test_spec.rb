@@ -14,4 +14,9 @@ RSpec.describe 'CVS Import App' do
     expect(last_response.body).to include('Emilly Batista Neto')
     expect(last_response.content_type).to eq('application/json')
   end
+
+  it 'Vê os resultados na página' do
+    get '/home'
+    expect(last_response.body).to include('Emilly Batista Neto')
+  end
 end
