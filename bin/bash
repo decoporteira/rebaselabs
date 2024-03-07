@@ -4,11 +4,11 @@ docker run \
   --rm \
   --name dataBaseContainer \
   -e POSTGRES_PASSWORD=123456 \
-  -e POSTGRES_DB=data_base \
+  -e POSTGRES_DB=postgres \
   -p 5432:5432 \
   --network my-network \
-  -v $(pwd)/pg_data:/var/lib/postgresql/data \
   -d \
+  -v $(pwd)/pg_data:/var/lib/postgresql/data \
   postgres
 
 docker run \
@@ -21,5 +21,5 @@ docker run \
   --network my-network \
   -v $(pwd)/bundle:/usr/local/bundle \
   ruby \
-  bash -c "bundle install && ruby import_new_database.rb && ruby server.rb -p 3000 -o 0.0.0.0"
+  bash -c "bundle install && ruby import.rb && ruby server.rb -p 3000 -o 0.0.0.0"
 
