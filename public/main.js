@@ -35,7 +35,7 @@ fetch(url).
       <h3>Resultados</h3>
       <div class='result-exam'> 
       <ul>
-      ${patient.tests.map(test => `<li>${test.tipo_exame} - Limites: ${test.limites_tipo_exame} - Resultado: ${test.resultado_tipo_exame}</li>`).join('')}
+      ${patient.tests.map(test => `<li><strong>${test.tipo_exame}:</strong><br> Limites: ${test.limites_tipo_exame} - Resultado:</strong>  ${test.resultado_tipo_exame}</li>`).join('')}
     </ul>
        
       </div>`

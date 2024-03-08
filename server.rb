@@ -7,7 +7,7 @@ get '/' do
 end
 
 get '/home' do
-  headers 'Access-Control-Allow-Origin' => '*' 
+  headers 'Access-Control-Allow-Origin' => '*'
   content_type 'text/html'
   File.open('index.html')
 end
@@ -46,7 +46,6 @@ get '/tests' do
     FROM exams JOIN patients ON exams.patient_id = patients.id
     JOIN doctors ON exams.doctor_id = doctors.id;'
 
-   
   results = conn.exec(select_data_sql)
 
   select_types_sql = 'SELECT 
@@ -66,7 +65,6 @@ get '/tests' do
   exam_types = conn.exec(select_types_sql)
 
   formatted_results = results.map do |row|
-    # Obtendo os resultados dos tipos de exame apenas para o exame atual
     exam_types_for_exam = exam_types.select { |exam| exam['exam_id'] == row['id'] }
     {
       "token_resultado_exame": row["token_resultado_exame"],  
@@ -94,7 +92,5 @@ get '/tests' do
       end
     }
   end
-  
   formatted_results.to_json
-
 end
