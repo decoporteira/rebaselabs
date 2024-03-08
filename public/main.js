@@ -10,10 +10,9 @@ fetch(url).
       patient.data_nascimento_paciente = new Date(patient.data_nascimento_paciente);
       patient.data_exame = new Date(patient.data_exame);
       const li = document.createElement('li');
-      li.innerHTML = `<h2>Cód. Exame: ${patient.id}</h2>
-
+      li.innerHTML = `<h2>Cód. Exame: ${patient.id}</h2
       
-      <h3>Paciente</h3>
+      <h3>Pacientes</h3>
       <div class='data-patient'> 
         <strong>Nome:</strong> ${patient.nome_paciente} | 
         <strong>Nascimento:</strong> ${patient.data_nascimento_paciente.toLocaleDateString('pt-BR')} | 
@@ -23,18 +22,22 @@ fetch(url).
       </div>
       <h3>Médico</h3>
       <div class='data-doctor'> 
-        <strong>Nome:</strong> ${patient.nome_medico} |
-        <strong>CRM:</strong> ${patient.crm_medico} |
-        <strong>CRM Estado:</strong> ${patient.crm_medico_estado} |
-        <strong>Email:</strong> ${patient.email_medico}
+        <strong>Nome:</strong> ${patient.doctor.nome_medico} |
+        <strong>CRM:</strong> ${patient.doctor.crm_medico} |
+        <strong>CRM Estado:</strong> ${patient.doctor.crm_medico_estado} |
+        <strong>Email:</strong> ${patient.doctor.email_medico}
       </div>
       <h3>Exame</h3>
       <div class='data-exam'> 
         <strong>Token do exame:</strong> ${patient.token_resultado_exame}
         <strong>Data do exame:</strong> ${patient.data_exame.toLocaleDateString('pt-BR')} |
-        <strong>Tipo do exame:</strong> ${patient.tipo_exame} |
-        <strong>Limites:</strong> ${patient.limites_tipo_exame} |
-        <strong>Resultado:</strong> ${patient.resultado_tipo_exame}
+      </div>
+      <h3>Resultados</h3>
+      <div class='result-exam'> 
+      <ul>
+      ${patient.tests.map(test => `<li>${test.tipo_exame} - Limites: ${test.limites_tipo_exame} - Resultado: ${test.resultado_tipo_exame}</li>`).join('')}
+    </ul>
+       
       </div>`
       li.classList.add('item-exam');
       fragment.appendChild(li);

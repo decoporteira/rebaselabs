@@ -63,6 +63,11 @@ create_exam_types_table_sql = <<~SQL
     );
 SQL
 
+delete_exam_types_table_sql = <<~SQL
+DROP TABLE exam_types cascade;
+SQL
+
+#conn.exec(delete_exam_types_table_sql)
 conn.exec(create_patients_table_sql)
 conn.exec(create_doctors_table_sql)
 conn.exec(create_exams_table_sql)
@@ -70,7 +75,7 @@ conn.exec(create_exam_types_table_sql)
 
 puts '##################### Importação Iniciada #####################'
 
-CSV.foreach('./data/data_test.csv', col_sep: ';', headers: true) do |row|
+CSV.foreach('./data/data.csv', col_sep: ';', headers: true) do |row|
   insert_patient_query = <<~SQL
     INSERT INTO patients (cpf, nome_paciente, email_paciente, data_nascimento_paciente, endereco_paciente, cidade_paciente, estado_paciente)
     VALUES ($1, $2, $3, $4, $5, $6, $7)

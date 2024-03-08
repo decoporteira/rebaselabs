@@ -48,13 +48,29 @@ get '/tests' do
 
    
   results = conn.exec(select_data_sql)
-  
+
+  select_types_sql = 'SELECT 
+    exams.token_resultado_exame, 
+    exams.id,
+    exam_types.id,
+    exam_types.exam_id,
+    exam_types.tipo_exame,
+    exam_types.limites_tipo_exame,
+    exam_types.resultado_tipo_exame
+    FROM exams 
+    JOIN exam_types ON exams.id = exam_types.exam_id
+    WHERE exam_types.exam_id = exams.id;'
+
   content_type :json
   
+  exam_types = conn.exec(select_types_sql)
+
   formatted_results = results.map do |row|
+    # Obtendo os resultados dos tipos de exame apenas para o exame atual
+    exam_types_for_exam = exam_types.select { |exam| exam['exam_id'] == row['id'] }
     {
+      "token_resultado_exame": row["token_resultado_exame"],  
       "id": row["id"],
-      "token_resultado_exame": row["token_resultado_exame"],
       "data_exame": row["data_exame"],
       "cpf": row["cpf"],
       "nome_paciente": row["nome_paciente"],
@@ -68,7 +84,14 @@ get '/tests' do
         "crm_medico": row["crm_medico"],
         "crm_medico_estado": row["crm_medico_estado"],
         "email_medico": row["email_medico"]
-      }
+      },
+      "tests": exam_types_for_exam.map do |exam_row|
+        {
+          "tipo_exame": exam_row["tipo_exame"],
+          "limites_tipo_exame": exam_row["limites_tipo_exame"],
+          "resultado_tipo_exame": exam_row["resultado_tipo_exame"]
+        }
+      end
     }
   end
   
