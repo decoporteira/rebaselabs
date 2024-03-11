@@ -39,7 +39,6 @@ expected =
     ]
   }
 
-
 RSpec.describe 'CVS Import App' do
   include Rack::Test::Methods
 
@@ -61,5 +60,13 @@ RSpec.describe 'CVS Import App' do
     expect(last_response).to be_ok
     expect(last_response.content_type).to eq('text/html;charset=utf-8')
     expect(last_response.body).to include('Exames')
+  end
+
+  it 'Vê  query na tela', type: :feature do
+    get '/tests/IQCZ17'
+    expect(last_response).to be_ok
+    response_json = JSON.parse(last_response.body)
+    expect(last_response.content_type).to eq('application/json')
+    expect(response_json).to include(expected)
   end
 end

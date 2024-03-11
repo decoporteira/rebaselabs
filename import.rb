@@ -67,7 +67,7 @@ delete_exam_types_table_sql = <<~SQL
 DROP TABLE exam_types cascade;
 SQL
 
-#conn.exec(delete_exam_types_table_sql)
+conn.exec(delete_exam_types_table_sql)
 conn.exec(create_patients_table_sql)
 conn.exec(create_doctors_table_sql)
 conn.exec(create_exams_table_sql)
