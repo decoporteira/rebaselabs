@@ -46,7 +46,7 @@ RSpec.describe 'CVS Import App' do
     Sinatra::Application
   end
 
-  it 'testa o json' do
+  it 'e testa o json do endpoint com todos os exames' do
     get '/tests'
     expect(last_response).to be_ok
     response_json = JSON.parse(last_response.body)
@@ -56,17 +56,24 @@ RSpec.describe 'CVS Import App' do
   end
 
   it 'Vê os resultados na página', type: :feature do
-    get '/home'
+    get '/'
     expect(last_response).to be_ok
     expect(last_response.content_type).to eq('text/html;charset=utf-8')
     expect(last_response.body).to include('Exames')
   end
 
-  it 'Vê  query na tela', type: :feature do
+  it 'e testa o json do endpoint com a pesquisa por token de exame', type: :feature do
     get '/tests/IQCZ17'
     expect(last_response).to be_ok
     response_json = JSON.parse(last_response.body)
     expect(last_response.content_type).to eq('application/json')
     expect(response_json).to include(expected)
+  end
+
+  it 'e testa o json do endpoint com resultado vazio', type: :feature do
+    get '/tests/nonono'
+    expect(last_response).to be_ok
+    expect(last_response.content_type).to eq('application/json')
+    expect(JSON.parse(last_response.body)).to eq([])
   end
 end
