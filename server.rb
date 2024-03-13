@@ -156,3 +156,17 @@ get '/tests/:query' do
   content_type :json
   formatted_results.to_json
 end
+
+post '/import' do
+  require_relative 'import_file'
+  
+  if params['file'] && (params['file']['type'] == 'text/csv')
+  
+  file = params[:file][:tempfile]
+  ImportFile.import(file)
+  { status: 'success', message: 'Arquivo no formato correto' }.to_json
+else
+  { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
+  end
+end
+
