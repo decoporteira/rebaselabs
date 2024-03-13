@@ -30,7 +30,7 @@ RSpec.describe 'CVS Import App' do
     conn = PG.connect(host: 'localhost', dbname: 'test', user: 'postgres', password: 'postgres', port: 5432)
     result = conn.exec('SELECT COUNT(*) FROM patients')
     expect(result[0]['count'].to_i).to eq(1)
-    
+
   end
 
   it 'Vê os resultados na página', type: :feature do
@@ -56,5 +56,3 @@ RSpec.describe 'CVS Import App' do
   end
   clean_data_base
 end
-
-

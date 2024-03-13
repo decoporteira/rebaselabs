@@ -2,6 +2,7 @@ require 'sinatra'
 require 'pg'
 require 'json'
 require './class/file_importer'
+require 'csv'
 require_relative 'import_job'
 
 ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
@@ -162,8 +163,28 @@ get '/tests/:query' do
 end
 
 post '/import' do
-  ImportJob.perform_async
-  'Feito'
+  if params['file'] && (params['file']['type'] == 'text/csv')
+    
+    file = params[:file][:tempfile]
+    csv_content = CSV.read(file, headers: true, col_sep: ';')
+
+    CSV.open('data/new_data.csv', 'w', col_sep: ';') do |csv|
+      csv << csv_content.headers
+
+      csv_content.each do |row|
+        csv << row
+      end
+    end
+    file_path = 'data/new_data.csv'
+
+    ImportJob.perform_async(file_path)
+    
+  else
+    { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
+  end
+
+  # ImportJob.perform_async
+  # 'Feito'
 end
 
 set :port, 3000
