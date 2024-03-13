@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    container_name: db
+    hostname: db
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./pg_data:/var/lib/postgresql/data
+     
+  rebaselabs:
+    image: ruby
+    container_name: rebaselabs
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./bundle:/usr/local/bundle
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+    environment:
+      - DBHOST=db
+    command: bash -c "bundle install && ruby server.rb"

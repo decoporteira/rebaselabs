@@ -1,14 +1,17 @@
 require 'sinatra'
 require 'pg'
 require 'json'
+require './class/file_importer'
 
-db_config = {
-  host: (ENV['DBHOST'] || 'localhost'),
-  dbname: 'postgres',
-  user: 'postgres',
-  password: '123456',
-  port: 5432
-}
+ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
+
+    db_config = {
+      host: ENV['DBHOST'] || 'localhost',
+      dbname: ENV['DB_NAME'] || 'development',
+      user: 'postgres',
+      password: 'postgres',
+      port: 5432
+    }
 
 select_types_sql = 'SELECT 
     exams.token_resultado_exame, 
@@ -158,15 +161,13 @@ get '/tests/:query' do
 end
 
 post '/import' do
-  require_relative 'import_file'
-  
   if params['file'] && (params['file']['type'] == 'text/csv')
-  
-  file = params[:file][:tempfile]
-  ImportFile.import(file)
-  { status: 'success', message: 'Arquivo no formato correto' }.to_json
-else
-  { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
+    file = params[:file][:tempfile]
+    FileImporter.import(file)
+  else
+    { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
   end
 end
 
+set :port, 3000
+set :bind, '0.0.0.0'

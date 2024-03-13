@@ -1,80 +1,20 @@
-class ImportFile
-  
+class FileImporter
+
   def self.import(file)
     require 'pg'
     require 'csv'
 
+    ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
+
     db_config = {
-      host: (ENV['DBHOST'] || 'localhost'),
-      dbname: 'postgres',
+      host: ENV['DBHOST'] || 'localhost',
+      dbname: ENV['DB_NAME'] || 'development',
       user: 'postgres',
-      password: '123456',
+      password: 'postgres',
       port: 5432
     }
 
     conn = PG.connect(db_config)
-
-    create_patients_table_sql = <<~SQL
-      CREATE TABLE IF NOT EXISTS patients (
-        id SERIAL,
-        cpf VARCHAR(14),
-        nome_paciente VARCHAR(255),
-        email_paciente VARCHAR(255),
-        data_nascimento_paciente DATE,
-        endereco_paciente VARCHAR(255),
-        cidade_paciente VARCHAR(100),
-        estado_paciente VARCHAR(50),
-        PRIMARY KEY(id),
-        UNIQUE (cpf)
-        
-      );
-    SQL
-
-    create_doctors_table_sql = <<~SQL
-      CREATE TABLE IF NOT EXISTS doctors (
-        id SERIAL,
-        nome_medico VARCHAR(255),
-        crm_medico VARCHAR(20) UNIQUE,
-        crm_medico_estado VARCHAR(50),
-        email_medico VARCHAR(255),
-        PRIMARY KEY(id)
-      );
-    SQL
-
-    create_exams_table_sql = <<~SQL
-      CREATE TABLE IF NOT EXISTS exams (
-        id SERIAL,
-        patient_id INTEGER,
-        doctor_id INTEGER,
-        token_resultado_exame VARCHAR(100) UNIQUE,
-        data_exame DATE,
-        PRIMARY KEY(id),
-        FOREIGN KEY(patient_id) REFERENCES patients(id),
-        FOREIGN KEY(doctor_id) REFERENCES doctors(id)
-      );
-    SQL
-
-    create_exam_types_table_sql = <<~SQL
-      CREATE TABLE IF NOT EXISTS exam_types (
-        id SERIAL,
-        exam_id INTEGER,
-        tipo_exame VARCHAR(100),
-        limites_tipo_exame VARCHAR(255),
-        resultado_tipo_exame VARCHAR(255),
-        PRIMARY KEY(id),
-        FOREIGN KEY(exam_id) REFERENCES exams(id)
-        );
-    SQL
-
-    delete_exam_types_table_sql = <<~SQL
-    DROP TABLE exam_types cascade;
-    SQL
-
-    conn.exec(delete_exam_types_table_sql)
-    conn.exec(create_patients_table_sql)
-    conn.exec(create_doctors_table_sql)
-    conn.exec(create_exams_table_sql)
-    conn.exec(create_exam_types_table_sql)
 
     puts '##################### Importação por API Iniciada #####################'
 
