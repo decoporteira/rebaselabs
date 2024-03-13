@@ -20,8 +20,30 @@ services:
       - ./bundle:/usr/local/bundle
     ports:
       - 3000:3000
+    command: bash -c "bundle install && ruby server.rb"
     depends_on:
       - db
+      - redis
     environment:
       - DBHOST=db
-    command: bash -c "bundle install && ruby server.rb"
+      - REDIS_URL=redis://redis:6379/0
+
+  sidekiq:
+    image: ruby
+    container_name: sidekiq
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./bundle:/usr/local/bundle
+    ports: []
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DBHOST=db
+      - REDIS_URL=redis://redis:6379/0
+    command: sidekiq -r ./import_job.rb
+
+  redis:
+    image: redis
+    container_name: redis

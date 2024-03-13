@@ -2,6 +2,7 @@ require 'sinatra'
 require 'pg'
 require 'json'
 require './class/file_importer'
+require_relative 'import_job'
 
 ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
 
@@ -167,6 +168,11 @@ post '/import' do
   else
     { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
   end
+end
+
+post '/job' do
+  ImportJob.perform_async
+  'Feito'
 end
 
 set :port, 3000

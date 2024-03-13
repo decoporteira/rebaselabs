@@ -30,5 +30,7 @@ RSpec.describe 'CVS importa dados por API' do
     result = conn.exec('SELECT COUNT(*) FROM patients')
     expect(result[0]['count'].to_i).to eq(50)
     clean_data_base
+    conn.close
   end
 end
+

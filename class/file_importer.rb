@@ -16,7 +16,7 @@ class FileImporter
 
     conn = PG.connect(db_config)
 
-    puts '##################### Importação por API Iniciada #####################'
+    puts '##################### Importação Iniciada #####################'
 
     CSV.foreach(file, col_sep: ';', headers: true) do |row|
       insert_patient_query = <<~SQL

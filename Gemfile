@@ -10,6 +10,8 @@ gem 'rackup', '~> 2.1'
 
 gem 'rack'
 
+gem 'sidekiq'
+
 gem 'sinatra', '~> 4.0'
 
 group :test do
