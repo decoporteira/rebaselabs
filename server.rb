@@ -162,15 +162,6 @@ get '/tests/:query' do
 end
 
 post '/import' do
-  if params['file'] && (params['file']['type'] == 'text/csv')
-    file = params[:file][:tempfile]
-    FileImporter.import(file)
-  else
-    { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
-  end
-end
-
-post '/job' do
   ImportJob.perform_async
   'Feito'
 end
