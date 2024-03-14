@@ -3,10 +3,7 @@ require 'pg'
 require 'json'
 require 'csv'
 require_relative 'import_job'
-require './lib/fetch_exams_data'
-require './lib/fetch_exams_results'
-require './lib/format_results'
-require './lib/search_exam_result'
+Dir[File.join(__dir__, 'lib', '*.rb')].each { |file| require file }
 
 ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
 
