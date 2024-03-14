@@ -89,6 +89,7 @@ ul {
   background-color: #eeeeee;
   background-clip: padding-box;
   border-radius: 5px;
+  background-color: rgb(178, 205, 231);
 }
 .submit-file {
   display: block;
@@ -106,4 +107,20 @@ ul {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.table-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
 }

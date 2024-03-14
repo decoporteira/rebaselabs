@@ -39,7 +39,24 @@ function fetchExams(link) {
           <h3>Resultados</h3>
           <div class='result-exam'> 
             <ul>
-            ${patient.tests.map(test => `<li><strong>${test.tipo_exame}:</strong><br> Limites: ${test.limites_tipo_exame} - Resultado:</strong>  ${test.resultado_tipo_exame}</li>`).join('')}
+            <table>
+  <thead>
+    <tr>
+      <th>Tipo de Exame</th>
+      <th>Limites</th>
+      <th>Resultado</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${patient.tests.map(test => `
+      <tr class='tr-exams'>
+        <td><strong>${test.tipo_exame}</strong></td>
+        <td>${test.limites_tipo_exame}</td>
+        <td>${test.resultado_tipo_exame}</td>
+      </tr>
+    `).join('')}
+  </tbody>
+</table>
           </ul>
             
           </div>`;
