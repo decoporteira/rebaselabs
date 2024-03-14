@@ -4,24 +4,35 @@ Aplicação web para importar um .cvs para um banco de dados usando Docker.
 
 ## Tecnologias:
 - Docker
+- PostgreSQL
 - Ruby
-- 
+- PostgreSQL
+- Javascript
+- HTML
+- CSS
 
 ## Clonar o projeto: 
 ```
-bin/bash
+git clone git@github.com:decoporteira/rebaselabs.git
 ```
-## Clonar o projeto: 
+## Criar os containers: 
 ```
-bin/bash
+docker-compose up
 ```
 ## Endpoints: 
 ```
 /tests
 ```
+```
+/tests/token_do_exame
+```
+Importar dados de um .csv
+```
+/import
+``` 
 ## Tests: 
 ```
-bin/bash
+docker-compose up
 rspec
 ```
 
