@@ -67,7 +67,7 @@ class FileImporter
       insert_exam_types_query = <<~SQL
         INSERT INTO exam_types (tipo_exame, limites_tipo_exame, resultado_tipo_exame, exam_id)
         VALUES ($1, $2, $3, $4)
-        SQL
+      SQL
         conn.exec_params(insert_exam_types_query, [
           row['tipo exame'],
           row['limites tipo exame'],

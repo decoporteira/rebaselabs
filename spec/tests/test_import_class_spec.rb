@@ -1,19 +1,9 @@
 require 'spec_helper'
 require_relative '../../class/file_importer'
 
-def clean_data_base
-  conn.exec('DELETE FROM exam_types')
-  conn.exec('DELETE FROM exams cascade')
-  conn.exec('DELETE FROM patients cascade')
-  conn.exec('DELETE FROM doctors cascade')
-end
-
 RSpec.describe 'Testa classe FileImporter' do
- 
-
   it 'com sucesso' do
     conn = PG.connect(host: 'localhost', dbname: 'test', user: 'postgres', password: 'postgres', port: 5432)
-    
     data = 'spec/assets/data_test.csv'
 
     FileImporter.import(data)
@@ -27,5 +17,3 @@ RSpec.describe 'Testa classe FileImporter' do
     conn.close
   end
 end
-
-

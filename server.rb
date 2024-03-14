@@ -7,7 +7,6 @@ require_relative 'import_job'
 
 ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
  
-
 select_types_sql = 'SELECT 
     exams.token_resultado_exame, 
     exams.id,
@@ -32,13 +31,14 @@ get '/styles.css' do
 end
 
 get '/tests' do
-  # db_config = {
-  #   host: ENV['DBHOST'] || 'localhost',
-  #   dbname: ENV['RACK_ENV'] || 'development',
-  #   user: 'postgres',
-  #   password: 'postgres',
-  #   port: 5432
-  # }
+  db_config = {
+    host: ENV['DBHOST'] || 'localhost',
+    dbname: ENV['RACK_ENV'] || 'development',
+    user: 'postgres',
+    password: 'postgres',
+    port: 5432
+  }
+
     conn = PG.connect(db_config)
     select_data_sql = 'SELECT 
       exams.token_resultado_exame, 
@@ -92,6 +92,7 @@ get '/tests' do
         end
       }
   end
+  con.close
   formatted_results.to_json
 end
 
@@ -101,13 +102,14 @@ post '/tests' do
 end
 
 get '/tests/:query' do
-  # db_config = {
-  #   host: ENV['DBHOST'] || 'localhost',
-  #   dbname: ENV['DB_NAME'] || 'development',
-  #   user: 'postgres',
-  #   password: 'postgres',
-  #   port: 5432
-  # }
+  db_config = {
+    host: ENV['DBHOST'] || 'localhost',
+    dbname: ENV['DB_NAME'] || 'development',
+    user: 'postgres',
+    password: 'postgres',
+    port: 5432
+  }
+
   conn = PG.connect(db_config)
 
   query = params['query']
@@ -165,6 +167,7 @@ get '/tests/:query' do
       end
     }
   end
+  con.close
   content_type :json
   formatted_results.to_json
 end

@@ -7,9 +7,5 @@ class ImportJob
 
   def perform(file)
     FileImporter.import(file)
-
-    after_perform do |job|
-      FileUtils.rm_rf(Dir.glob('data/temp/*'))
-    end
   end
 end
