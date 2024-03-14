@@ -5,9 +5,13 @@ Aplicação web para importar um .cvs para um banco de dados usando Docker.
 ## Tecnologias:
 - Docker
 - Ruby
+- 
 
-## Como usar: 
-
+## Clonar o projeto: 
+```
+bin/bash
+```
+## Clonar o projeto: 
 ```
 bin/bash
 ```

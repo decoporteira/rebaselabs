@@ -5,10 +5,9 @@ class FileImporter
     require 'csv'
 
     ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
-
     db_config = {
       host: ENV['DBHOST'] || 'localhost',
-      dbname: ENV['DB_NAME'] || 'development',
+      dbname: ENV['RACK_ENV'] || 'development',
       user: 'postgres',
       password: 'postgres',
       port: 5432
@@ -75,7 +74,6 @@ class FileImporter
           row['resultado tipo exame'],
           exam_id
         ])
-
     end
     conn.close
   end

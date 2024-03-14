@@ -20,7 +20,7 @@ services:
       - ./bundle:/usr/local/bundle
     ports:
       - 3000:3000
-    command: bash -c "bundle install && ruby server.rb"
+    command: bash -c "bundle install && rm -rf /app/data/temp/* && ruby server.rb"
     depends_on:
       - db
       - redis
@@ -47,3 +47,5 @@ services:
   redis:
     image: redis
     container_name: redis
+    ports:
+    - "6379:6379"

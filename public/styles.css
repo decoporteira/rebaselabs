@@ -48,11 +48,10 @@ h3 {
 
 .nav-bar {
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: nowrap;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
 }
 
 ul {
@@ -60,7 +59,7 @@ ul {
  padding-inline-start: 0px;
 }
 
-#searchForm {
+.form-one {
   display: flex;
     flex-direction: row;
     gap: 3px;
@@ -102,6 +101,9 @@ ul {
   background-color: #eeeeee;
   background-clip: padding-box;
   border-radius: 5px;
-
 }
-
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

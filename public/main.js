@@ -7,12 +7,12 @@ function fetchExams(link) {
     .then(data => {
       
       if (data.length == 0) {
-        document.querySelector('h1').innerHTML = 'Nenhum exame encontrado';
+        document.querySelector('h2').innerHTML = 'Nenhum exame encontrado';
       } else {
         data.forEach(function(patient) {
           patient.data_nascimento_paciente = new Date(patient.data_nascimento_paciente);
           patient.data_exame = new Date(patient.data_exame);
-          document.querySelector('h1').innerHTML = 'Exames - RebaseLabs';
+         
           const li = document.createElement('li');
           li.innerHTML = `<h2>Token do Exame: ${patient.token_resultado_exame}</h2>
           

@@ -5,20 +5,22 @@
 <body>
  
   <div class="nav-bar">
-    <h1></h1>
-    <div>
-      <form action="/import" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" class="form-input">
-        <input type="submit" value="Importar" class="btn">
-      </form>
+    <h1>Rebase - Labs</h1>
+    <h2></h2>
+    <div class="header">
+      <div class="form-one">
+        <form action="/import" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" class="form-input">
+          <input type="submit" value="Importar" class="btn">
+        </form>
+      </div>
+      <div>
+        <div class="form-one">
+          <input type="text" id="query" name="query" class="form-input" placeholder="Digite um Token de Exame"><br>
+          <input type="submit" value="Pesquisar" class="btn">
+        </form>
+      </div>
     </div>
-    <div >
-      <form id="searchForm" >
-        <input type="text" id="query" name="query" class="form-input" placeholder="Digite um Token de Exame"><br>
-        <input type="submit" value="Pesquisar" class="btn">
-      </form>
-    </div>
-    
   </div>
   <div class="container">
     <ul></ul>

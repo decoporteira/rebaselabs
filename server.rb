@@ -6,14 +6,7 @@ require 'csv'
 require_relative 'import_job'
 
 ENV['DB_NAME'] = 'test' if ENV['RACK_ENV'] == 'test'
-
-    db_config = {
-      host: ENV['DBHOST'] || 'localhost',
-      dbname: ENV['DB_NAME'] || 'development',
-      user: 'postgres',
-      password: 'postgres',
-      port: 5432
-    }
+ 
 
 select_types_sql = 'SELECT 
     exams.token_resultado_exame, 
@@ -39,6 +32,13 @@ get '/styles.css' do
 end
 
 get '/tests' do
+  # db_config = {
+  #   host: ENV['DBHOST'] || 'localhost',
+  #   dbname: ENV['RACK_ENV'] || 'development',
+  #   user: 'postgres',
+  #   password: 'postgres',
+  #   port: 5432
+  # }
     conn = PG.connect(db_config)
     select_data_sql = 'SELECT 
       exams.token_resultado_exame, 
@@ -101,6 +101,13 @@ post '/tests' do
 end
 
 get '/tests/:query' do
+  # db_config = {
+  #   host: ENV['DBHOST'] || 'localhost',
+  #   dbname: ENV['DB_NAME'] || 'development',
+  #   user: 'postgres',
+  #   password: 'postgres',
+  #   port: 5432
+  # }
   conn = PG.connect(db_config)
 
   query = params['query']
@@ -164,27 +171,25 @@ end
 
 post '/import' do
   if params['file'] && (params['file']['type'] == 'text/csv')
-    
     file = params[:file][:tempfile]
+    timestamp = Time.now.strftime('%Y%m%d%H%M%S')
+    random_string = SecureRandom.hex(4)
+
     csv_content = CSV.read(file, headers: true, col_sep: ';')
 
-    CSV.open('data/new_data.csv', 'w', col_sep: ';') do |csv|
+    CSV.open("data/temp/new_data#{timestamp}_#{random_string}.csv", 'w', col_sep: ';') do |csv|
       csv << csv_content.headers
 
       csv_content.each do |row|
         csv << row
       end
     end
-    file_path = 'data/new_data.csv'
 
+    file_path = "data/temp/new_data#{timestamp}_#{random_string}.csv"
     ImportJob.perform_async(file_path)
-    
   else
     { status: 'error', message: 'Erro: Arquivo inválido.' }.to_json
   end
-
-  # ImportJob.perform_async
-  # 'Feito'
 end
 
 set :port, 3000
